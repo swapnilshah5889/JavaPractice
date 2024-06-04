@@ -10,8 +10,8 @@ To run this project, you will need:
 
 ## Usage
 Each package in this project is structured to focus on a different aspect of Core Java:
-- `ExceptionHandling` - Covers how to handle exceptions and errors 
-  
+- `ExceptionHandling` - Covers how to handle exceptions and errors
+
 To run a particular example, navigate to the corresponding package and execute the Java file.
 
 ## Contributing
