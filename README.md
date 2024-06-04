@@ -13,7 +13,7 @@ Each package in this project is structured to focus on a different aspect of Cor
 - `ExceptionHandling` - Covers how to handle exceptions and errors
   
 To run a particular example, navigate to the corresponding package and execute the Java file.
-
+   
 ## Contributing
 Contributions are welcome! If you have a code snippet or an example that can help others understand Java better, please feel free to add it to the project. Make sure to provide comments and documentation for your code.
 
