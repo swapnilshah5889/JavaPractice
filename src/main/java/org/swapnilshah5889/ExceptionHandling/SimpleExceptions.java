@@ -1,5 +1,9 @@
 package org.swapnilshah5889.ExceptionHandling;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -80,5 +84,27 @@ public class SimpleExceptions {
         finally {
             System.out.println("Inside finally");
         }
+    }
+
+    public void fileReadMethod() throws FileNotFoundException, IOException {
+        File file = new File("abc.txt");
+        // throws FileNotFoundException
+        FileReader reader = new FileReader(file);
+        // throws IOException
+        reader.read();
+    }
+
+    public void handlingThrowsMethod() {
+
+        try {
+            fileReadMethod();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Caught file not found exception");
+        }
+        catch (IOException e) {
+            System.out.println("Caught IO Exception");
+        }
+
     }
 }
