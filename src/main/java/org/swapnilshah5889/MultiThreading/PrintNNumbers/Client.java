@@ -1,6 +1,8 @@
 package org.swapnilshah5889.MultiThreading.PrintNNumbers;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client {
 
@@ -25,7 +27,6 @@ public class Client {
 
         System.out.println("Enter n: ");
         int n = sc.nextInt();
-
         // Common object between all threads
         NumberPrinter2 printer = new NumberPrinter2(1);
 
@@ -33,6 +34,26 @@ public class Client {
         for(int i=1; i<=n; i++) {
             Thread t = new Thread(printer);
             t.start();
+        }
+
+        System.out.println("Bye from main");
+
+
+    }
+
+    public static void version3() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter n: ");
+        int n = sc.nextInt();
+
+        // Create executor service object to manage threading
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+        // Assign the runnable class object to the executor service
+        for(int i=1; i<=n; i++) {
+            NumberPrinter2 printer = new NumberPrinter2(i);
+            executorService.execute(printer);
         }
 
         System.out.println("Bye from main");
@@ -46,7 +67,10 @@ public class Client {
         // version1();
 
         // Sharing data between all threads
-        version2();
+        // version2();
+
+        // Using executor service
+        version3();
 
     }
 }
