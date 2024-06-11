@@ -33,6 +33,8 @@ public class Client {
         // Print the value of all the future objects
         for(Future<String> greetingPromise : listOfPromises) {
             try{
+                // .get() is a Blocking call
+                // Main thread waits until this promise is resolved
                 String greeting = greetingPromise.get();
                 System.out.println(greeting);
             }
@@ -41,6 +43,7 @@ public class Client {
             }
         }
 
+        executorService.shutdown();
     }
 
     public static void main(String[] args) {
