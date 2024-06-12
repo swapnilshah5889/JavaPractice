@@ -14,9 +14,12 @@ public class SubtractorV2 implements Runnable {
 
     @Override
     public void run() {
-        lock.lock();
-        for(int i=0; i<1000000; i++ )  counter.n--;
-        lock.unlock();
+
+        for(int i=0; i<1000000; i++ ) {
+            lock.lock();
+            counter.n--;
+            lock.unlock();
+        }
     }
 
 }

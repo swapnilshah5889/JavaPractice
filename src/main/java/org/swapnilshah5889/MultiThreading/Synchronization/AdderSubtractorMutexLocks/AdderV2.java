@@ -15,10 +15,12 @@ public class AdderV2 implements Runnable{
     @Override
     public void run() {
 
-        // Create synchronized block using locking and unlocking
-        lock.lock();
-        for(int i=0; i<1000000; i++ ) counter.n++;
-        lock.unlock();
+        for(int i=0; i<1000000; i++ ) {
+            // Create synchronized block using locking and unlocking
+            lock.lock();
+            counter.n++;
+            lock.unlock();
+        }
     }
 
 }
