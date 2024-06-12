@@ -1,5 +1,8 @@
 package org.swapnilshah5889.MultiThreading.Synchronization;
 
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.AdderV4;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.CounterV4;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.SubtractorV4;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.AdderV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.CounterV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.SubtractorV2;
@@ -95,6 +98,32 @@ public class Client {
         System.out.println(counter.getN());
     }
 
+    /*
+    * This solution implements counter class as a thread safe class
+    * by making it's methods synchronized instead of the adder and subtractor classes
+    * */
+    public static void synchronizedCounter() {
+
+        CounterV4 counter = new CounterV4(0);
+        AdderV4 adder = new AdderV4(counter);
+        SubtractorV4 subtractor = new SubtractorV4(counter);
+
+        Thread adderThread = new Thread(adder);
+        Thread subThread = new Thread(subtractor);
+
+        adderThread.start();
+        subThread.start();
+
+        try {
+            adderThread.join();
+            subThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(counter.getN());
+    }
+
     public static void main(String[] args) {
 
         // Without synchronization
@@ -104,7 +133,11 @@ public class Client {
         // adderSubtractorWithMutexLocks();
 
         // Synchronized Keyword
-        adderSubtractorSynchronized();
+        //adderSubtractorSynchronized();
+
+        // Synchronized Counter object
+        synchronizedCounter();
+
     }
 
 }
