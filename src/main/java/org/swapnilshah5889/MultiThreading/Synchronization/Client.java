@@ -3,6 +3,9 @@ package org.swapnilshah5889.MultiThreading.Synchronization;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.AdderV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.CounterV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.SubtractorV2;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorSynchronized.AdderV3;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorSynchronized.CounterV3;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorSynchronized.SubtractorV3;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObject.Adder;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObject.Counter;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObject.Subtractor;
@@ -67,12 +70,41 @@ public class Client {
         System.out.println(counter.getN());
     }
 
+    /*
+    * Solution to race condition and synchronization problems
+    * Use synchronized block for critical section
+    * */
+    public static void adderSubtractorSynchronized() {
+        CounterV3 counter = new CounterV3(0);
+        AdderV3 adder = new AdderV3(counter);
+        SubtractorV3 subtractor = new SubtractorV3(counter);
+
+        Thread adderThread = new Thread(adder);
+        Thread subThread = new Thread(subtractor);
+
+        adderThread.start();
+        subThread.start();
+
+        try {
+            adderThread.join();
+            subThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(counter.getN());
+    }
+
     public static void main(String[] args) {
 
+        // Without synchronization
         //adderSubtractorWithObject();
 
-        adderSubtractorWithMutexLocks();
+        // Mutex locks
+        // adderSubtractorWithMutexLocks();
 
+        // Synchronized Keyword
+        adderSubtractorSynchronized();
     }
 
 }
