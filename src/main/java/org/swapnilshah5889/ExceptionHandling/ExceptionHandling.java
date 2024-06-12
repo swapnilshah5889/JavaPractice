@@ -5,7 +5,7 @@ public class ExceptionHandling {
     public static void main(String[] args) {
 
         SimpleExceptions simpleExceptions = new SimpleExceptions();
-        simpleExceptions.divide();
+        simpleExceptions.handlingThrowsMethod();
 
     }
 }
