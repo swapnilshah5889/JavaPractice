@@ -3,6 +3,9 @@ package org.swapnilshah5889.MultiThreading.Synchronization;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.AdderV4;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.CounterV4;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubctratorSynchronizedMethods.SubtractorV4;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorAtomicInteger.AdderV5;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorAtomicInteger.CounterV5;
+import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorAtomicInteger.SubtractorV5;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.AdderV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.CounterV2;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorMutexLocks.SubtractorV2;
@@ -13,6 +16,7 @@ import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObj
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObject.Counter;
 import org.swapnilshah5889.MultiThreading.Synchronization.AdderSubtractorWithObject.Subtractor;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -124,6 +128,35 @@ public class Client {
         System.out.println(counter.getN());
     }
 
+    /*
+     * This solution implements AtomicInteger inside the counter class
+     * AtomicInteger are by default thread safe as they implement locks internally
+     * */
+    public static void atomicIntegerCounter() {
+
+        AtomicInteger n = new AtomicInteger(0);
+        CounterV5 counter = new CounterV5(n);
+        AdderV5 adder = new AdderV5(counter);
+        SubtractorV5 subtractor = new SubtractorV5(counter);
+
+        Thread adderThread = new Thread(adder);
+        Thread subThread = new Thread(subtractor);
+
+        adderThread.start();
+        subThread.start();
+
+        try {
+            adderThread.join();
+            subThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(counter.getN());
+    }
+
+
+
     public static void main(String[] args) {
 
         // Without synchronization
@@ -136,8 +169,10 @@ public class Client {
         //adderSubtractorSynchronized();
 
         // Synchronized Counter object
-        synchronizedCounter();
+        // synchronizedCounter();
 
+        // Atomic Integer Counter
+        atomicIntegerCounter();
     }
 
 }
